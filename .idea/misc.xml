@@ -15,9 +15,10 @@
         <entry key="..\:/other/android/MapApp/app/src/main/res/layout/fragment_reminders.xml" value="0.1" />
         <entry key="..\:/other/android/MapApp/app/src/main/res/layout/item_reminder.xml" value="0.11651469098277609" />
         <entry key="..\:/other/android/MapApp/app/src/main/res/menu/bottom_menu.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_add_reminder.xml" value="0.275" />
         <entry key="app/src/main/res/layout/activity_add_restaurant.xml" value="0.275" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.17346014492753623" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.2584808349609375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.1598731884057971" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.19821923902331878" />

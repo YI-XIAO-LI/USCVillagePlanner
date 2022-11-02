@@ -89,7 +89,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         this.savedInstanceState = savedInstanceState;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         mBtnRegister = (Button) findViewById(R.id.mBtnRegister1);
         mBtnLogin = (Button) findViewById(R.id.mBtnLogin1);
         mBtnRegister.setOnClickListener(this);
