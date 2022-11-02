@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "922101511443",
+    "firebase_url": "https://villageplanner-315cd-default-rtdb.firebaseio.com",
+    "project_id": "villageplanner-315cd",
+    "storage_bucket": "villageplanner-315cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922101511443:android:a57f7d99fb9206d3bb16e6",
+        "android_client_info": {
+          "package_name": "com.example.mapapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "922101511443-0r0brer3ttiqh5pdhciee3g7mrk2h1jt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt8qr_KW-yeyxPzDpLYq2g7U8QunkJp9w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922101511443-0r0brer3ttiqh5pdhciee3g7mrk2h1jt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
