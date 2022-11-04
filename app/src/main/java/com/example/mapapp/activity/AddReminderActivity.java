@@ -71,7 +71,7 @@ public class AddReminderActivity extends BaseActivity {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 arrivalTime = hourOfDay*60+minute;
                 mEtAt.setText(Config.ft(hourOfDay,minute));
-                reminderTime = hourOfDay*60+minute-(totalTime%24%60);
+                reminderTime = hourOfDay*60+minute-(totalTime%60);
                 int hour = reminderTime/60;
                 int min = reminderTime%60;
                 mEtMt.setText(Config.ft(hour,min));

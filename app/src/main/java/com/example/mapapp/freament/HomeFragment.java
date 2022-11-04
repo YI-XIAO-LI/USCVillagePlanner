@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.lang.Math;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -223,8 +224,8 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
         for(RestBean restBean : restList){
             int waitPersonNum = 0;
             for(PersonBean personBean : personList){
-                if(personBean.getLatitude()==restBean.getLatitude()
-                        &&personBean.getLongtitude()==restBean.getLongtitude()){
+                if(Math.abs(personBean.getLatitude()-restBean.getLatitude())<= 0.0009
+                        && Math.abs(personBean.getLongtitude()-restBean.getLongtitude()) <= 0.0009) {
                     waitPersonNum++;
                 }
             }
