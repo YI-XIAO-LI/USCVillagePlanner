@@ -1,13 +1,22 @@
 package com.example.mapapp.freament;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.example.mapapp.R;
@@ -17,16 +26,27 @@ import com.example.mapapp.bean.PersonBean;
 import com.example.mapapp.bean.RestBean;
 import com.example.mapapp.tool.SharePerferenceUtils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,8 +59,11 @@ public class ProfileFragment extends BaseFragment {
     private Button logout;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference("data");
-    private FirebaseAuth mAuth;
-    private GoogleSignInClient mGoogleSignInClient;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    GoogleSignInOptions mGoogleSignInOptions;
+    GoogleSignInClient mGoogleSignInClient;
+    FirebaseUser currentUser;
+    StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://villageplanner-315cd.appspot.com");
 
     @Override
     protected int getLayoutId() {
@@ -53,14 +76,37 @@ public class ProfileFragment extends BaseFragment {
         mTvName = (TextView) findView(R.id.mTvName);
         mTvEmail = (TextView) findView(R.id.mTvEmail);
 
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        mGoogleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(getContext(), mGoogleSignInOptions);
+
+        // mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             mTvName.setText(currentUser.getDisplayName());
             mTvEmail.setText(currentUser.getEmail());
-            mIvHead.setImageURI(currentUser.getPhotoUrl());
+            // mIvHead.setImageURI(Uri.parse("http://tny.im/tHM"));
             // mIvHead.setOnClickListener(view -> addData());
+            if(currentUser.getPhotoUrl() != null) {
+                storageRef.child(currentUser.getDisplayName()).child("profile.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.with(getContext()).load(uri).into(mIvHead);
+                        mIvHead.setBackground(null);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+                // mIvHead.setBackgroundColor("white");
+                // mIvHead.setImageURI(currentUser.getPhotoUrl());
+            }
             findView(R.id.logout).setOnClickListener(view -> logout());
+            findView(R.id.mIvHead).setOnClickListener(view -> changeProfileImage());
             return;
         }
 
@@ -70,6 +116,48 @@ public class ProfileFragment extends BaseFragment {
 
         // mIvHead.setOnClickListener(view -> addData());
         findView(R.id.logout).setOnClickListener(view -> logout());
+        findView(R.id.mIvHead).setOnClickListener(view -> changeProfileImage());
+    }
+
+    private void changeProfileImage() {
+        Intent openGalleryIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(openGalleryIntent, 1000);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000) {
+            if (resultCode == Activity.RESULT_OK) {
+                Uri imageUri = data.getData();
+                mIvHead.setImageURI(imageUri);
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                        .setPhotoUri(imageUri)
+                        .build();
+
+                currentUser.updateProfile(profileUpdates)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("===", "User profile updated.");
+                                }
+                            }
+                        });
+                StorageReference fileref = storageRef.child(currentUser.getDisplayName()).child("profile.jpg");
+                fileref.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // add a toast
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // add a toast
+                    }
+                });
+            }
+        }
     }
 
     private void logout() {
@@ -90,6 +178,7 @@ public class ProfileFragment extends BaseFragment {
             userReminderRef = reminderRef.child(SharePerferenceUtils.getString(getActivity(),"DisplayName",""));
         }
 
+        // store reminders into the firebase
         Map<String,String> map = new HashMap<>();
         map.put("times", gson.toJson(times));
         map.put("restName", gson.toJson(restNameList));
@@ -102,24 +191,23 @@ public class ProfileFragment extends BaseFragment {
             FirebaseAuth.getInstance().signOut();
         }
         else {
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestEmail()
-                    .build();
-            mGoogleSignInClient = GoogleSignIn.getClient(getContext(), gso);
-            mGoogleSignInClient.signOut()
-                    .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            // ...
-                        }
-                    });
-            mGoogleSignInClient.revokeAccess()
-                    .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            // ...
-                        }
-                    });
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+            if (account != null) {
+                mGoogleSignInClient.signOut()
+                        .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                // ...
+                            }
+                        });
+                mGoogleSignInClient.revokeAccess()
+                        .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                // ...
+                            }
+                        });
+            }
 
         }
         Intent intent= new Intent(getContext(), LoginActivity.class);

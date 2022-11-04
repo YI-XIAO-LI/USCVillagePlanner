@@ -20,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -52,6 +53,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null)
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             FirebaseAuth.getInstance().signOut();
@@ -177,11 +179,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode != 0) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        } else if(requestCode == 1) {
+            try {
+                task.getResult(ApiException.class);
+                handleSignInResult(task);
+            } catch (ApiException e) {
+                Toast.makeText(getApplicationContext(),"Login Unsuccessful", Toast.LENGTH_SHORT).show();
+            }
+        }
+        /*
+        else if(requestCode == 1) {
             assert data != null;
             showToast(data.toString());
         }
+        */
     }
 
     @Override

@@ -2,9 +2,6 @@ package com.example.mapapp.bean;
 
 import java.util.List;
 
-/**
- * create by liubit on 2022/10/23
- */
 public class RouteBean {
 
 

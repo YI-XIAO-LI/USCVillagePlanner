@@ -82,12 +82,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            /*
-            case R.id.imageView:
-                Intent gallaryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(gallaryIntent, RESULT_IMAGE);
-                break;
-             */
 
             case R.id.mBtnLogin:
                 // jump to the login page if registration finished
@@ -100,7 +94,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String email = this.mEtEmail.getText().toString();
                 String password = this.mEtPw.getText().toString();
                 String image = this.imagelink.getText().toString();
-                Uri uri = Uri.parse(image);
+                // Uri uri = Uri.parse(image);
                 if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !image.isEmpty()) {
                     if (!email.contains(".com") || !email.contains("@")){
                         Log.w("===", "createUserWithEmail:failure");
@@ -130,7 +124,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                                 Toast.LENGTH_SHORT).show();
                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(name)
-                                                .setPhotoUri(uri)
                                                 .build();
 
                                         user.updateProfile(profileUpdates)
