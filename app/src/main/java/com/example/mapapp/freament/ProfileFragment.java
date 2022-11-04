@@ -98,7 +98,6 @@ public class ProfileFragment extends BaseFragment {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
                     }
                 });
 
@@ -149,11 +148,15 @@ public class ProfileFragment extends BaseFragment {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // add a toast
+                        Toast.makeText(getContext(), "Image Uploaded Successfully.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         // add a toast
+                        Toast.makeText(getContext(), "Image Uploaded Unsuccessfully. Please Reselect.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
             }

@@ -54,8 +54,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        // set all fields
-        imagelink = (EditText) findViewById(R.id.imagelink);
         mBtnRegister = (Button) findViewById(R.id.mBtnRegister);
         mBtnLogin = (Button) findViewById(R.id.mBtnLogin);
         mEtName = (EditText) findViewById(R.id.mEtName);

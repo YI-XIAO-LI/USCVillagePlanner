@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="100dp"
+    android:paddingTop="150dp"
     android:background="@drawable/background"
     android:backgroundTint="#9FFFFFFF"
     android:backgroundTintMode="src_over"
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/mBtnRegister"
         android:text="Register"
-        app:layout_constraintTop_toBottomOf="@+id/imagelink"
+        app:layout_constraintTop_toBottomOf="@+id/mEtPw"
         android:layout_marginStart="45dp"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="30dp"/>
@@ -70,18 +70,6 @@
         android:layout_marginEnd="50dp"
         android:layout_marginTop="30dp"/>
 
-    <EditText
-        android:id="@+id/imagelink"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="45dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="30dp"
-        android:hint=" Profile Image Link"
-        android:drawableStart="@drawable/ic_baseline_image_search_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mEtPw" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

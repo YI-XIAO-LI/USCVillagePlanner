@@ -21,11 +21,11 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2584808349609375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.1598731884057971" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.19821923902331878" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.1792236328125" />
         <entry key="app/src/main/res/layout/content_register.xml" value="0.10081053698074975" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.4304756053979846" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.23635864257812503" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.16259057971014493" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.22647302599920743" />
       </map>
     </option>
   </component>

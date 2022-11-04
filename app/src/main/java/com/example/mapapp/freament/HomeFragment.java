@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -69,7 +70,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     FusedLocationProviderClient fusedLocationProviderClient;
     //private LocationManager locationManager = null; // 位置管理
-    /*
+/*
     private LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(@NonNull Location location) {
@@ -79,7 +80,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
             createSelfMarker(new LatLng(location.getLatitude(),location.getLongitude()),currentPoint==null);
         }
     };
-    */
+ */
     private LatLng currentPoint;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference("data");
@@ -220,8 +221,8 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
 
     }
 
-    private void createMarker(){
-        for(RestBean restBean : restList){
+    private void createMarker() {
+        for(RestBean restBean : restList) {
             int waitPersonNum = 0;
             for(PersonBean personBean : personList){
                 if(Math.abs(personBean.getLatitude()-restBean.getLatitude())<= 0.0009
@@ -251,7 +252,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
         }
     }
 
-    private void getRoute(LatLng desPoint,String title){
+    private void getRoute(LatLng desPoint,String title) {
         StringBuilder builder = new StringBuilder("https://maps.googleapis.com/maps/api/directions/json?sensor=false&mode=walking");//driving walking
         builder.append("&origin="+currentPoint.latitude+","+currentPoint.longitude);
         builder.append("&destination="+desPoint.latitude+","+desPoint.longitude);
