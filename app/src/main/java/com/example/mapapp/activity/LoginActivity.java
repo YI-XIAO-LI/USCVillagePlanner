@@ -117,10 +117,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            /*
             case R.id.mEtPw1:
                 password = this.mEtPw1.getText().toString();
             case R.id.mEtEmail1:
                 email = this.mEtEmail1.getText().toString();
+             */
             case R.id.sign_in_button:
                 Intent intent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(intent, 1);
@@ -186,12 +188,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 Toast.makeText(getApplicationContext(),"Login Unsuccessful", Toast.LENGTH_SHORT).show();
             }
         }
-        /*
+
         else if(requestCode == 1) {
             assert data != null;
             showToast(data.toString());
         }
-        */
+
     }
 
     @Override
