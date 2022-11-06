@@ -32,10 +32,9 @@ import butterknife.OnClick;
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
     private Button mBtnRegister, mBtnLogin;
-    protected EditText mEtEmail, mEtName, mEtPw, imagelink;
+    protected EditText mEtEmail, mEtName, mEtPw;
     private Bundle savedInstanceState;
     private FirebaseAuth mAuth;
-    private static final int RESULT_IMAGE = 1;
 
     @Override
     protected int getLayoutId() {
@@ -91,9 +90,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String name = this.mEtName.getText().toString();
                 String email = this.mEtEmail.getText().toString();
                 String password = this.mEtPw.getText().toString();
-                String image = this.imagelink.getText().toString();
                 // Uri uri = Uri.parse(image);
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty() && !image.isEmpty()) {
+                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
                     if (!email.contains(".com") || !email.contains("@")){
                         Log.w("===", "createUserWithEmail:failure");
                         Context context = getApplicationContext();
@@ -104,7 +102,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     else if (password.length() < 6) {
                         Log.w("===", "createUserWithEmail:failure");
                         Context context = getApplicationContext();
-                        Toast.makeText(context, "Password too short.",
+                        Toast.makeText(context, "Password needs to be at least 6 char.",
                                 Toast.LENGTH_SHORT).show();
                         break;
                     }
