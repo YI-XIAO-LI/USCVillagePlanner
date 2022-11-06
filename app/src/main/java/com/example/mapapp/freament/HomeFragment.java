@@ -225,7 +225,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
         for(RestBean restBean : restList) {
             int waitPersonNum = 0;
             for(PersonBean personBean : personList){
-                if(Math.abs(personBean.getLatitude()-restBean.getLatitude())<= 0.0009
+                if(Math.abs(personBean.getLatitude()-restBean.getLatitude())<= 0.0000009
                         && Math.abs(personBean.getLongtitude()-restBean.getLongtitude()) <= 0.0009) {
                     waitPersonNum++;
                 }
@@ -449,10 +449,24 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
         // cava
         personBeanList.add(new PersonBean("mark",34.025821775294204,  -118.28505440744799));
         personBeanList.add(new PersonBean("dan",34.025821775294204,  -118.28505440744799));
+        personBeanList.add(new PersonBean("markA",34.025821775294204,  -118.28505440744799));
+        personBeanList.add(new PersonBean("markB",34.025821775294204,  -118.28505440744799));
+        personBeanList.add(new PersonBean("markC",34.025821775294204,  -118.28505440744799));
+        // Honey bird
+        personBeanList.add(new PersonBean("markD",34.024904175743075,-118.28441808019377));
+
+        // dulce
+        personBeanList.add(new PersonBean("markD",34.02561669173768,-118.28516860388257));
+        personBeanList.add(new PersonBean("markE",34.02561669173768,-118.28516860388257));
+        personBeanList.add(new PersonBean("markF",34.02561669173768,-118.28516860388257));
+        personBeanList.add(new PersonBean("markG",34.02561669173768,-118.28516860388257));
+        personBeanList.add(new PersonBean("markH",34.02561669173768,-118.28516860388257));
+
         // insomnia cookie
         personBeanList.add(new PersonBean("james", 34.025191020187506, -118.28531291510147));
         // city taco
         personBeanList.add(new PersonBean("tim", 34.02426427775233,-118.2844844611436));
+        personBeanList.add(new PersonBean("tim2", 34.02426427775233,-118.2844844611436));
         // green leaf
         personBeanList.add(new PersonBean("tommy", 34.02474079953199,-118.28528325248934));
         // Il giardinao ristorante
