@@ -3,17 +3,18 @@ GIF Demonstration:
 ![](https://github.com/WeiLong27/public_project_gif/blob/master/dynamic_island.gif)
 
 Run Instructions:
-Import unzipped project directory
-Set up Android Studio + Emulator
-Ensure emulator is Pixel 4 API 33 (this should be your ‘running device’), If you don’t have Pixel 4 API 33 in your Android Studio, create a new device with Pixel 4 API 33 configuration at Device Manager.
-Start the Pixel 4 API 33 emulator device, and this app will only support running in portrait mode
-[Required] Try running the app first, then the app should appear on your emulator device. Then go to the emulator’s home page, swipe up and go to ‘Settings’, then scroll down to ‘Location’, toggle the ‘Use Location’ to be on, this ensures that the Village Planner App can access google location services. Then, click on “App Location Permissions” to enable location for the app “USC Village Planner”, choose “Allow only while using the app”, toggle to enable “Use Precise  Location.”
-[Optional but Strongly Recommended] In the Android Studio Emulator window, click on ‘Extended Controls’ (it is a button with an icon of 3 dots lined vertically).
-Select ‘Location’ on the sidebar, and click/search any location on the map, and you may choose to save that location as a ‘saved point’ and click on ‘Set Location’ to manually set your emulator device’s location. It is strongly recommended that you set a location near the USC campus region.
-Click on the Run App icon to start the application
-The application will now officially start on your emulator window panel
-[TroubleShooting - Build Project] If build failed, try clean and rebuild the project
-[Troubleshooting - Google Login]
+* Import unzipped project directory
+* Set up Android Studio + Emulator
+   - Ensure emulator is Pixel 4 API 33 (this should be your ‘running device’), If you don’t have Pixel 4 API 33 in your Android Studio, create a new device with Pixel 4 API 33 configuration at Device Manager.
+   - Start the Pixel 4 API 33 emulator device, and this app will only support running in portrait mode
+   - [Required] Try running the app first, then the app should appear on your emulator device. Then go to the emulator’s home page, swipe up and go to ‘Settings’, then scroll down to ‘Location’, toggle the ‘Use Location’ to be on, this ensures that the Village Planner App can access google location services. Then, click on “App Location Permissions” to enable location for the app “USC Village Planner”, choose “Allow only while using the app”, toggle to enable “Use Precise  Location.”
+   - [Optional but Strongly Recommended] In the Android Studio Emulator window, click on ‘Extended Controls’ (it is a button with an icon of 3 dots lined vertically).
+   - Select ‘Location’ on the sidebar, and click/search any location on the map, and you may choose to save that location as a ‘saved point’ and click on ‘Set Location’ to manually set your emulator device’s location. It is strongly recommended that you set a location near the USC campus region.
+   - Click on the Run App icon to start the application
+* The application will now officially start on your emulator window panel
+   - [TroubleShooting - Build Project] If build failed, try clean and rebuild the project
+   - [Troubleshooting - Google Login]
+
 Our google login functionality may be unstable, but we will fix it in later iterations.
 In the case where you choose to sign in via Google OAuth and find that the app is stuck in the login/register page, there are 2 ways to fix this:
 1. If the screen did not turn gray, try clicking on the Google Sign in Button again (usually it won’t happen).
