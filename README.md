@@ -1,6 +1,6 @@
 # USCVillagePlanner
 GIF Demonstration:
-[Imgur](https://i.imgur.com/WRVg300.gifv)
+![](https://github.com/WeiLong27/public_project_gif/blob/master/dynamic_island.gif)
 
 Run Instructions:
 Import unzipped project directory
