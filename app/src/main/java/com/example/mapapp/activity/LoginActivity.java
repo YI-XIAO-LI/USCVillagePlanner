@@ -76,6 +76,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         SharePerferenceUtils.putStringList(context,"times",times);
         SharePerferenceUtils.putStringList(context,"restName",restNameList);
         SharePerferenceUtils.putStringList(context,"arrivalTime",arrivalList);
+        SharePerferenceUtils.putString(context, "reminderInit", "false");
     }
 
 

@@ -93,7 +93,7 @@ public class AddReminderActivity extends BaseActivity {
             SharePerferenceUtils.putStringList(this,"times", times);
             SharePerferenceUtils.putStringList(this,"restName", restNameList);
             SharePerferenceUtils.putStringList(this,"arrivalTime", arrivalList);
-
+/*
             Gson gson = new Gson();
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -113,7 +113,7 @@ public class AddReminderActivity extends BaseActivity {
             map.put("arrivalTime", gson.toJson(arrivalList));
             // add current user
             userReminderRef.setValue(map);
-
+*/
             showToast("Add Reminder Success");
             finish();
         } else {

@@ -164,6 +164,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void logout() {
+        SharePerferenceUtils.putString(getContext(), "reminderInit", "false");
         List<String> arrivalList = SharePerferenceUtils.getStringList(getContext(),"arrivalTime");
         List<String> times = SharePerferenceUtils.getStringList(getContext(),"times");
         List<String> restNameList = SharePerferenceUtils.getStringList(getContext(),"restName");

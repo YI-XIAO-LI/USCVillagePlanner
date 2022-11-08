@@ -124,36 +124,43 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
         else {
             userReminderRef = reminderRef.child(SharePerferenceUtils.getString(getActivity(),"DisplayName",""));
         }
-        userReminderRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("times").getValue() == null) {
-                    return;
+        if (SharePerferenceUtils.getString(getActivity(), "reminderInit", "") != "true") {
+            userReminderRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child("times").getValue() == null) {
+                        return;
+                    }
+                    List<String> arrivalList = new ArrayList<>();
+                    List<String> times = new ArrayList<>();
+                    List<String> restNameList = new ArrayList<>();
+                    SharePerferenceUtils.putStringList(getContext(), "times", times);
+                    SharePerferenceUtils.putStringList(getContext(), "restName", restNameList);
+                    SharePerferenceUtils.putStringList(getContext(), "arrivalTime", arrivalList);
+
+                    times = gson.fromJson(dataSnapshot.child("times").getValue().toString(), new TypeToken<List<String>>() {
+                    }.getType());
+                    Log.d("===", "personList:" + times.size());
+                    restNameList = gson.fromJson(dataSnapshot.child("restName").getValue().toString(), new TypeToken<List<String>>() {
+                    }.getType());
+                    Log.d("===", "personList:" + restNameList.size());
+                    arrivalList = gson.fromJson(dataSnapshot.child("arrivalTime").getValue().toString(), new TypeToken<List<String>>() {
+                    }.getType());
+                    Log.d("===", "personList:" + arrivalList.size());
+
+                    SharePerferenceUtils.putStringList(getContext(), "times", times);
+                    SharePerferenceUtils.putStringList(getContext(), "restName", restNameList);
+                    SharePerferenceUtils.putStringList(getContext(), "arrivalTime", arrivalList);
+                    SharePerferenceUtils.putString(getContext(), "reminderInit", "true");
                 }
-                List<String> arrivalList = new ArrayList<>();
-                List<String> times = new ArrayList<>();
-                List<String> restNameList = new ArrayList<>();
-                SharePerferenceUtils.putStringList(getContext(),"times",times);
-                SharePerferenceUtils.putStringList(getContext(),"restName",restNameList);
-                SharePerferenceUtils.putStringList(getContext(),"arrivalTime",arrivalList);
 
-                times = gson.fromJson(dataSnapshot.child("times").getValue().toString(), new TypeToken<List<String>>(){}.getType());
-                Log.d("===","personList:"+times.size());
-                restNameList = gson.fromJson(dataSnapshot.child("restName").getValue().toString(), new TypeToken<List<String>>(){}.getType());
-                Log.d("===","personList:"+restNameList.size());
-                arrivalList = gson.fromJson(dataSnapshot.child("arrivalTime").getValue().toString(), new TypeToken<List<String>>(){}.getType());
-                Log.d("===","personList:"+arrivalList.size());
 
-                SharePerferenceUtils.putStringList(getContext(),"times", times);
-                SharePerferenceUtils.putStringList(getContext(),"restName", restNameList);
-                SharePerferenceUtils.putStringList(getContext(),"arrivalTime", arrivalList);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("===The read failed: " + databaseError.getCode());
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("===The read failed: " + databaseError.getCode());
+                }
+            });
+        }
 
 
     }
