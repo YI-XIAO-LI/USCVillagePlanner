@@ -50,6 +50,7 @@ In the case where you choose to sign in via Google OAuth and find that the app i
 * Reminders will appear on the reminders page (you can navigate to the reminders page from the navigation bar at the bottom). To cancel a reminder, simply click the cancel button on the top right corner of each reminder.
 * When time’s up, you should be able to receive an in-app pop-up notification displaying details of the reminder. Once a user is done with the pop-up notification reminder, the user can select “Acknowledge and Delete” which will close the pop-up and remove the reminder from the database. Click the link below for a screenshot of such a notification.
 ![image](https://user-images.githubusercontent.com/50726914/200222364-b7af9305-262f-43d8-8aa6-79da7868fc4a.jpg)
+* **[Note]** Reminders stored in database is refreshed upon user log-in, and user log-off. As such, please make sure to log-off before stopping the app to persist your data changes (add/cancel reminder)in the database for your next sign-in session.
 
 ## Displaying and Adding Profile Photo
 
