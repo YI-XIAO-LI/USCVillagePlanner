@@ -18,9 +18,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void init() {
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        //创建首页底部导航栏
+        //homepage nav
         NavController navController = Navigation.findNavController(this, R.id.host_fragment);
-        //首页底部导航栏与界面关联
+        //setup nav controller
         NavigationUI.setupWithNavController(navView, navController);
     }
 }

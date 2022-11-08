@@ -387,7 +387,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
                    if(currentPoint!=null){
                        getRoute(marker.getPosition(),marker.getTitle());
                    }else {
-                       showToast("定位失败，开始重新定位");
+                       showToast("failed to get position，try to request location...");
                        requestLocation();
                    }
                }

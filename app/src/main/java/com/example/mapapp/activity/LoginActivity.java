@@ -108,7 +108,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 .requestId()
                 .requestProfile()
                 .requestIdToken(getString(R.string.web_client_id))
-                .requestEmail() //可以获取到邮箱信息【这一步还挺有必要，不光可以获取到邮箱信息
+                .requestEmail() //可以获取到邮箱信息
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
     }
