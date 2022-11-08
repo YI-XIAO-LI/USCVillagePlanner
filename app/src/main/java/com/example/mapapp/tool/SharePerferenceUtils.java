@@ -71,9 +71,9 @@ public class SharePerferenceUtils {
 
     /**
      * @param ctx
-     *            上下文环境
+     * 上下文环境
      * @param key
-     *            要从config.xml移除节点的name的名称
+     * 要从config.xml移除节点的name的名称
      */
     public static void removeKey(Context ctx, String key) {
         if (sp == null) {
