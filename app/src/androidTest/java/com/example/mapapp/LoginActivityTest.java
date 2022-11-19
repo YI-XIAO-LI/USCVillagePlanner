@@ -19,6 +19,7 @@ import static java.security.AccessController.getContext;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
@@ -92,7 +93,7 @@ public class LoginActivityTest {
         onView(ViewMatchers.withId(R.id.mBtnLogin1)).perform(click());
 
         try{
-            intended(IntentMatchers.hasComponent(MainActivity.class.getName()));
+            intended(IntentMatchers.hasComponent(MapsActivity.class.getName()));
             return;
         } catch (AssertionFailedError e) {
             // intent did not appear, might be something to do with emulator config with firebase
