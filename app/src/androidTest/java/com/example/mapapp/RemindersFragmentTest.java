@@ -83,6 +83,7 @@ public class RemindersFragmentTest {
         onView(ViewMatchers.withId(R.id.mTvAddReminder)).perform(click());
         onView(withId(R.id.mEtAt)).check(matches(isDisplayed()));
         onView(withId(R.id.mEtAt)).perform(click());
+        // pick a picker, set it to 11:11, and check if it is working as intended
         onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(11, 11));
         onView(withText("OK")).perform(click());
         onView(withId(R.id.mEtAt)).check(matches(withText("11:11")));
@@ -112,6 +113,13 @@ public class RemindersFragmentTest {
     public void reminderTimeIsDisplayed(){
         onView(ViewMatchers.withId(R.id.mTvAddReminder)).perform(click());
         onView(withId(R.id.mEtMt)).check(matches(isDisplayed()));
+        // set a time at arrival time, should automatically prompts a time displayed at reminder time
+        onView(withId(R.id.mEtAt)).perform(click());
+        // pick a picker, set it to 11:11, and check if it is working as intended
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(11, 11));
+        onView(withText("OK")).perform(click());
+        // no wait time should result in the same displayed time
+        onView(withId(R.id.mEtMt)).check(matches(withText("11:11")));
     }
 
     @Test
@@ -121,8 +129,27 @@ public class RemindersFragmentTest {
     }
 
     @Test
+    public void saveEmptyReminder(){
+        onView(ViewMatchers.withId(R.id.mTvAddReminder)).perform(click());
+        // reminder section should be empty
+        onView(withId(R.id.mEtMt)).check(matches(withText("")));
+        // save empty reminder
+        onView(withId(R.id.mBtnSave)).perform(click());
+        // should not be prompts to the next activity (should stay on current page)
+        onView(withId(R.id.mBtnSave)).check(matches(isDisplayed()));
+    }
+
+    @Test
     public void cancelReminderIsDisplayed(){
         onView(ViewMatchers.withId(R.id.mTvAddReminder)).perform(click());
         onView(withId(R.id.mBtnCancel)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void cancelReminderSetting(){
+        onView(ViewMatchers.withId(R.id.mTvAddReminder)).perform(click());
+        // cancel button redirects back to the map view (home) page
+        onView(withText("Cancel")).perform(click());
+        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
     }
 }
