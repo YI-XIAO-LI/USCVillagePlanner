@@ -176,6 +176,9 @@ public class UtilHelper {
                 System.out.println("Invalid Times");
                 return -1;
             } else {
+                if(hourOfDay*60+minute-(totalTime%60) < 0) {
+                    return hourOfDay*60+minute-(totalTime%60) + 24*60;
+                }
                 return hourOfDay*60+minute-(totalTime%60);
             }
 

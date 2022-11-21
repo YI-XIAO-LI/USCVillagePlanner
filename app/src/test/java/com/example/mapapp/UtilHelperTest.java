@@ -50,7 +50,7 @@ public class UtilHelperTest extends TestCase {
     }
 
     @Test
-    public void testEmailValidation() {
+    public void testInvalidEmail() {
         String email = "email";
         String password = "123456";
         assertEquals("Invalid Email.", helper.emailPasswordValidation(email, password));
@@ -58,7 +58,14 @@ public class UtilHelperTest extends TestCase {
         assertEquals("Invalid Email.", helper.emailPasswordValidation(email, password));
         email = "email.com";
         assertEquals("Invalid Email.", helper.emailPasswordValidation(email, password));
-        email = "email@email.com";
+    }
+
+    @Test
+    public void testValidEmail() {
+        String password = "123456";
+        String email = "email@email.com";
+        assertEquals("", helper.emailPasswordValidation(email, password));
+        email = "name@gmail.com";
         assertEquals("", helper.emailPasswordValidation(email, password));
     }
 
@@ -191,28 +198,25 @@ public class UtilHelperTest extends TestCase {
         PersonBean person = new PersonBean("benjamin", 30.5, -118.7);
         RestBean rest = new RestBean("waterloo cafe", "123 waterloo street", 30.5, -118.7);
         assertEquals(UtilHelper.within_range(person, rest, -1), false);
-    }
-
-    @Test
-    public void testNotWithinRange(){
-        PersonBean person = new PersonBean("benjamin", 30.5, -118.7);
-        RestBean rest = new RestBean("waterloo cafe", "123 waterloo street", 30.502, -118.673);
+        person = new PersonBean("benjamin", 30.5, -118.7);
+        rest = new RestBean("waterloo cafe", "123 waterloo street", 30.502, -118.673);
         assertEquals(UtilHelper.within_range(person, rest, 0.001), false);
     }
 
+
     @Test
     public void testCalculateArrivalTime(){
+        // check if arrival time is computed correctly
         assertEquals(UtilHelper.calculateArrivalTime(5, 10), 310);
-
     }
 
     @Test
     public void testCalculateReminderTime(){
+        // check if reminder time is calculated correctly
+        assertEquals(UtilHelper.calculateReminderTime(0, 0, 13), 1427);
         assertEquals(UtilHelper.calculateReminderTime(5, 10, 13), 297);
 
     }
-
-    // @Test
 
 
 }
