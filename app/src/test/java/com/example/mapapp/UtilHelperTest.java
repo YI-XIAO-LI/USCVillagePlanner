@@ -138,7 +138,8 @@ public class UtilHelperTest extends TestCase {
         List<String> arrivalList = new ArrayList<>();
         arrivalList.add("1");
         arrivalList.add("2");
-
+        helper.addToReminder(times, restNameList, arrivalList, 3, 3, "3");
+        assertEquals(Arrays.asList("1", "2", "3"), times);
     }
 
     @Test
