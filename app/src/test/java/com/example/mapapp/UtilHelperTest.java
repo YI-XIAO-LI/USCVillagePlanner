@@ -98,7 +98,7 @@ public class UtilHelperTest extends TestCase {
         personList.add(new PersonBean("markG", 34.02561669173768, -118.28516860388257));
         personList.add(new PersonBean("markH", 34.02561669173768, -118.28516860388257));
 
-        int waitPerson = helper.calculateWaitQueue(personList, restBean);
+        int waitPerson = helper.calculateRestaurantWaitQueue(personList, restBean);
         assertEquals(5, waitPerson);
     }
 
@@ -176,6 +176,39 @@ public class UtilHelperTest extends TestCase {
         longitude = -118.28;
         latitude = 34.02;
         assertEquals("", helper.restNameAddressValidation(name, address, latitude, longitude, restBean));
+
+    }
+
+    @Test
+    public void testValidWithinRange(){
+        PersonBean person = new PersonBean("benjamin", 30.5, -118.7);
+        RestBean rest = new RestBean("waterloo cafe", "123 waterloo street", 30.5, -118.7);
+        assertEquals(UtilHelper.within_range(person, rest, 0.5), true);
+    }
+
+    @Test
+    public void testInvalidWithinRange(){
+        PersonBean person = new PersonBean("benjamin", 30.5, -118.7);
+        RestBean rest = new RestBean("waterloo cafe", "123 waterloo street", 30.5, -118.7);
+        assertEquals(UtilHelper.within_range(person, rest, -1), false);
+    }
+
+    @Test
+    public void testNotWithinRange(){
+        PersonBean person = new PersonBean("benjamin", 30.5, -118.7);
+        RestBean rest = new RestBean("waterloo cafe", "123 waterloo street", 30.502, -118.673);
+        assertEquals(UtilHelper.within_range(person, rest, 0.001), false);
+    }
+
+    @Test
+    public void testCalculateArrivalTime(){
+        assertEquals(UtilHelper.calculateArrivalTime(5, 10), 310);
+
+    }
+
+    @Test
+    public void testCalculateReminderTime(){
+        assertEquals(UtilHelper.calculateReminderTime(5, 10, 13), 297);
 
     }
 

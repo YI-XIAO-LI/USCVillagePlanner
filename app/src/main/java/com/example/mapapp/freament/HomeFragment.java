@@ -232,7 +232,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
     private void createMarker() {
         for(RestBean restBean : restList) {
             UtilHelper helper = new UtilHelper();
-            int waitPersonNum = helper.calculateWaitQueue(personList, restBean);
+            int waitPersonNum = helper.calculateRestaurantWaitQueue(personList, restBean);
 
             Log.d("===",restBean.getName()+" 等待人数 "+waitPersonNum);
             LatLng point = new LatLng(restBean.getLatitude(),restBean.getLongtitude());

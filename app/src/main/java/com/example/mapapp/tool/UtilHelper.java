@@ -78,11 +78,10 @@ public class UtilHelper {
             return false;
         }
 
-        public int calculateWaitQueue(List<PersonBean> personList, RestBean restBean) {
+        public int calculateRestaurantWaitQueue(List<PersonBean> personList, RestBean restBean) {
             int waitPersonNum = 0;
             for(PersonBean personBean : personList){
-                if(Math.abs(personBean.getLatitude()-restBean.getLatitude())<= 0.0000009
-                        && Math.abs(personBean.getLongtitude()-restBean.getLongtitude()) <= 0.0009) {
+                if(within_range(personBean, restBean, 0.00009)){
                     waitPersonNum++;
                 }
             }
@@ -90,9 +89,15 @@ public class UtilHelper {
         }
 
         public void removeReminder(List<String> times, List<String> restNameList, List<String> arrivalList, int position) {
-            times.remove(position);
-            restNameList.remove(position);
-            arrivalList.remove(position);
+            if(!times.isEmpty() && !restNameList.isEmpty() && !arrivalList.isEmpty()){
+                times.remove(position);
+                restNameList.remove(position);
+                arrivalList.remove(position);
+            } else {
+                System.out.println("ERROR: invalid input fields");
+                return;
+            }
+
         }
 
         public void addToReminder(List<String> times, List<String> restNameList, List<String> arrivalList, int arrivalTime, int reminderTime, String restName) {
@@ -132,5 +137,49 @@ public class UtilHelper {
             }
             return "";
         }
+
+    public static boolean within_range(PersonBean person, RestBean rest, double range){
+        double lat1 = person.getLatitude();
+        double long1 = person.getLongtitude();
+        double lat2 = rest.getLatitude();
+        double long2 = rest.getLongtitude();
+
+        if(range < 0){
+            return false;
+        } else {
+            if(Math.abs(lat1-lat2) <= range){
+                if(Math.abs(long1-long2)<= range){
+                    return true;
+                } else {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public static int calculateArrivalTime(int hourOfDay, int minute){
+            if(hourOfDay < 0 || minute < 0){
+                System.out.println("Invalid Times");
+                return -1;
+            } else {
+                return hourOfDay * 60 + minute;
+            }
+
+
+    }
+
+    public static int calculateReminderTime(int hourOfDay, int minute, int totalTime){
+            if(totalTime < 0 || hourOfDay < 0 || minute < 0){
+                System.out.println("Invalid Times");
+                return -1;
+            } else {
+                return hourOfDay*60+minute-(totalTime%60);
+            }
+
+    }
+
 
 }
