@@ -26,9 +26,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class AddReminderActivity extends BaseActivity {
-    @BindView(R.id.mEtAt)
+    // @BindView(R.id.mEtAt)
     TextView mEtAt;
-    @BindView(R.id.mEtMt)
+    // @BindView(R.id.mEtMt)
     TextView mEtMt;
     int totalTime;
     int arrivalTime = 0;
