@@ -46,7 +46,8 @@ public class AddReminderActivity extends BaseActivity {
     protected void init() {
         findViewById(R.id.mBtnSave).setOnClickListener(view -> save());
         findViewById(R.id.mBtnCancel).setOnClickListener(view -> finish());
-
+        mEtAt = (TextView) findViewById(R.id.mEtAt);
+        mEtMt = (TextView) findViewById(R.id.mEtMt);
         totalTime = getIntent().getIntExtra("totalTime",0);
         restName = getIntent().getStringExtra("restName");
         if(restName.contains("(wait")){
