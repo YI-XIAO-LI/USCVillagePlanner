@@ -218,5 +218,19 @@ public class UtilHelperTest extends TestCase {
 
     }
 
+    @Test
+    public void testConfig_12hour(){
+        int hour = 9;
+        int minute = 30;
+        assertEquals("09:30", helper.config(hour, minute));
+    }
+
+    @Test
+    public void testConfig_24hour(){
+        int hour = 23;
+        int minute = 30;
+        assertEquals("23:30", helper.config(hour, minute));
+    }
+
 
 }

@@ -184,5 +184,11 @@ public class UtilHelper {
 
     }
 
+    public String config(int hour,int min){
+        String hs = hour>9?hour+"":"0"+hour;
+        String ms = min>9?min+"":"0"+min;
+        return hs+":"+ms;
+    }
+
 
 }
