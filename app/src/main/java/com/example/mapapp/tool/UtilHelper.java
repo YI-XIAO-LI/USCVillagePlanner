@@ -190,5 +190,18 @@ public class UtilHelper {
         return hs+":"+ms;
     }
 
+    public String timerTask(String times, int hour, int min) {
+
+        int hr = hour;
+        int m = min;
+        if (hr * 60 + m == Integer.parseInt(times)) {
+            int time = Integer.parseInt(times);
+            int th = time/60;
+            int tm = time - th * 60;
+            return th + ":" + tm;
+        }
+        return "";
+    }
+
 
 }

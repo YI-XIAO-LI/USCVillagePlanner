@@ -233,5 +233,12 @@ public class UtilHelperTest extends TestCase {
         assertEquals("23:30", helper.config(hour, minute));
     }
 
+    @Test
+    public void testConfig_zeroes(){
+        int hour = 0;
+        int minute = 0;
+        assertEquals("00:00", helper.config(hour, minute));
+    }
+
 
 }
