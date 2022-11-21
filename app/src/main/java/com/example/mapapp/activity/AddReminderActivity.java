@@ -11,6 +11,7 @@ import com.example.mapapp.R;
 import com.example.mapapp.base.BaseActivity;
 import com.example.mapapp.tool.Config;
 import com.example.mapapp.tool.SharePerferenceUtils;
+import com.example.mapapp.tool.UtilHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +35,7 @@ public class AddReminderActivity extends BaseActivity {
     int reminderTime = 0;
     String restName = "";
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("data");
+    UtilHelper helper = new UtilHelper();
 
     @Override
     protected int getLayoutId() {
@@ -50,10 +52,6 @@ public class AddReminderActivity extends BaseActivity {
         if(restName.contains("(wait")){
             restName = restName.split("wait")[0].replace("(","");
         }
-        // extract data from firebase by email
-
-        // store by email as key;
-        // store by name as key
     }
 
     @OnClick({R.id.mEtAt})
@@ -75,9 +73,7 @@ public class AddReminderActivity extends BaseActivity {
                 int hour = reminderTime/60;
                 int min = reminderTime%60;
                 mEtMt.setText(Config.ft(hour,min));
-
             }
-            //0,0指的是时间，true表示是否为24小时，true为24小时制
         },0,0,true).show();
 
     }
@@ -87,33 +83,11 @@ public class AddReminderActivity extends BaseActivity {
             List<String> arrivalList = SharePerferenceUtils.getStringList(this,"arrivalTime");
             List<String> times = SharePerferenceUtils.getStringList(this,"times");
             List<String> restNameList = SharePerferenceUtils.getStringList(this,"restName");
-            arrivalList.add(""+arrivalTime);
-            times.add(""+reminderTime);
-            restNameList.add(restName);
+            helper.addToReminder(times, restNameList, arrivalList, arrivalTime, reminderTime, restName);
             SharePerferenceUtils.putStringList(this,"times", times);
             SharePerferenceUtils.putStringList(this,"restName", restNameList);
             SharePerferenceUtils.putStringList(this,"arrivalTime", arrivalList);
-/*
-            Gson gson = new Gson();
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            FirebaseUser currentUser = mAuth.getCurrentUser();
 
-            DatabaseReference reminderRef = ref.child("reminders");
-            DatabaseReference userReminderRef = null;
-            if(currentUser != null){
-                userReminderRef = reminderRef.child(currentUser.getDisplayName().toString());
-            }
-            else {
-                userReminderRef = reminderRef.child(SharePerferenceUtils.getString(getApplicationContext(),"DisplayName",""));
-            }
-
-            Map<String,String> map = new HashMap<>();
-            map.put("times", gson.toJson(times));
-            map.put("restName", gson.toJson(restNameList));
-            map.put("arrivalTime", gson.toJson(arrivalList));
-            // add current user
-            userReminderRef.setValue(map);
-*/
             showToast("Add Reminder Success");
             finish();
         } else {

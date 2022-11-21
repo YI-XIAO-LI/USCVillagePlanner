@@ -20,6 +20,7 @@ import androidx.loader.content.AsyncTaskLoader;
 
 import com.example.mapapp.R;
 import com.example.mapapp.base.BaseActivity;
+import com.example.mapapp.tool.UtilHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -91,21 +92,17 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String email = this.mEtEmail.getText().toString();
                 String password = this.mEtPw.getText().toString();
                 // Uri uri = Uri.parse(image);
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    if (!email.contains(".com") || !email.contains("@")){
+                UtilHelper helper = new UtilHelper();
+                if (helper.checkEmptyField(name, email, password)) {
+                    String message = helper.emailPasswordValidation(email, password);
+                    if (!message.equals("")){
                         Log.w("===", "createUserWithEmail:failure");
                         Context context = getApplicationContext();
-                        Toast.makeText(context, "Invalid Email.",
+                        Toast.makeText(context, message,
                                 Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    else if (password.length() < 6) {
-                        Log.w("===", "createUserWithEmail:failure");
-                        Context context = getApplicationContext();
-                        Toast.makeText(context, "Password needs to be at least 6 char.",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    }
+
                     // store in firebase
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -151,7 +148,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     Context context = getApplicationContext();
                     Toast.makeText(context, "Registration failed (Empty Field(s)).",
                             Toast.LENGTH_SHORT).show();
-                    // updateUI(null);
                 }
                 break;
         }

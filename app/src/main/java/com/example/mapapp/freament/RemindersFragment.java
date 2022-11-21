@@ -17,6 +17,7 @@ import com.example.mapapp.R;
 import com.example.mapapp.base.BaseFragment;
 import com.example.mapapp.tool.Config;
 import com.example.mapapp.tool.SharePerferenceUtils;
+import com.example.mapapp.tool.UtilHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -36,14 +37,13 @@ public class RemindersFragment extends BaseFragment {
     @BindView(R.id.mRecyclerView)
     RecyclerView mRecyclerView;
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("data");
-    List<String> times;
-    List<String> restNameList;
-    List<String> arrivalList;
+    List<String> times, restNameList, arrivalList;
     MyAdapter adapter;
     Timer timer;
     TimerTask timerTask;
     Date currentDate;
     AlertDialog dialog;
+    UtilHelper helper = new UtilHelper();
 
     @Override
     protected int getLayoutId() {
@@ -80,7 +80,6 @@ public class RemindersFragment extends BaseFragment {
                         showTip(Config.ft(th,tm),restNameList.get(i),Config.ft(hh,mm),i);
                     }
                 }
-
             }
         };
         timer.schedule(timerTask,1000,1000);
@@ -97,9 +96,7 @@ public class RemindersFragment extends BaseFragment {
                             .setPositiveButton("Acknowledge and Delete", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    times.remove(position);
-                                    restNameList.remove(position);
-                                    arrivalList.remove(position);
+                                    helper.removeReminder(times, restNameList, arrivalList, position);
                                     SharePerferenceUtils.putStringList(getActivity(),"times",times);
                                     SharePerferenceUtils.putStringList(getActivity(),"restName",restNameList);
                                     SharePerferenceUtils.putStringList(getActivity(),"arrivalTime",arrivalList);
@@ -110,7 +107,6 @@ public class RemindersFragment extends BaseFragment {
                     dialog.show();
                 }
             });
-
         }
     }
 
@@ -123,7 +119,6 @@ public class RemindersFragment extends BaseFragment {
 
     public class MyAdapter extends RecyclerView.Adapter<MyVH>{
         Context context;
-
         public MyAdapter(Context context){
             this.context = context;
         }
@@ -144,9 +139,7 @@ public class RemindersFragment extends BaseFragment {
             holder.mTvRt.setText("Reminder Time: "+Config.ft(hour,min));
             holder.mTvName.setText(restNameList.get(position));
             holder.mTvCancel.setOnClickListener(view -> {
-                times.remove(position);
-                restNameList.remove(position);
-                arrivalList.remove(position);
+                helper.removeReminder(times, restNameList, arrivalList, position);
                 SharePerferenceUtils.putStringList(getActivity(),"times",times);
                 SharePerferenceUtils.putStringList(getActivity(),"restName",restNameList);
                 SharePerferenceUtils.putStringList(getActivity(),"arrivalTime",arrivalList);

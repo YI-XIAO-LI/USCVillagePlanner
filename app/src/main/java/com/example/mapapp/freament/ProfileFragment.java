@@ -217,40 +217,4 @@ public class ProfileFragment extends BaseFragment {
         Intent intent= new Intent(getContext(), LoginActivity.class);
         startActivity(intent);
     }
-
-    private void addData(){
-        List<RestBean> list = new ArrayList<>();
-        list.add(new RestBean("CAVA","3201 S Hoover St Suite 1840, Los Angeles, CA 90089",34.025821775294204, -118.28505440744799));
-        list.add(new RestBean("Greenleaf Kitchen & Cocktails","929 W Jefferson Blvd #1650, Los Angeles, CA 90089",34.02474079953199,-118.28528325248934));
-        list.add(new RestBean("Chinese Street Food","3201 S Hoover St #1870, Los Angeles, CA 90007",34.02465643138648,-118.28398648508674));
-        list.add(new RestBean("Il Giardino Ristorante","3201 S Hoover St #1850, Los Angeles, CA 90089",34.025330990643525,-118.28434297834089));
-        list.add(new RestBean("Honeybird","3201 S Hoover St #1835, Los Angeles, CA 90089",34.024904175743075,-118.28441808019377));
-        list.add(new RestBean("City Tacos","3201 S Hoover St #1870, Los Angeles, CA 90007",34.02426427775233,-118.2844844611436));
-        list.add(new RestBean("DULCE","3096 McClintock Ave Ste 1420, Los Angeles, CA 90007",34.02561669173768,-118.28516860388257));
-        list.add(new RestBean("Fruit + Candy","3201 S Hoover St #1815, Los Angeles, CA 90089",34.0246011481783,-118.28421080203752));
-        list.add(new RestBean("Insomnia Cookies","929 W Jefferson Blvd # 1620, Los Angeles CA 90089",34.025191020187506,-118.28531291510147));
-        list.add(new RestBean("Kobunga Korean Grill","929 W. Jefferson Blvd Suite 1610, Los Angeles, CA 90007",34.02475834463438,-118.28523987092082));
-
-        List<PersonBean> personBeanList = new ArrayList<>();
-
-        personBeanList.add(new PersonBean("tom",34.02468029012595,-118.2855711093449));
-        personBeanList.add(new PersonBean("jerry",34.025066786661604, -118.2845280792272));
-        // cava
-        personBeanList.add(new PersonBean("mark",34.025821775294204,  -118.28505440744799));
-        personBeanList.add(new PersonBean("dan",34.025821775294204,  -118.28505440744799));
-        // insomnia cookie
-        personBeanList.add(new PersonBean("james", 34.025191020187506, -118.28531291510147));
-        // city taco
-        personBeanList.add(new PersonBean("tim", 34.02426427775233,-118.2844844611436));
-        // green leaf
-        personBeanList.add(new PersonBean("tommy", 34.02474079953199,-118.28528325248934));
-        // Il giardinao ristorante
-        personBeanList.add(new PersonBean("trojan", 34.025330990643525,-118.28434297834089));
-
-        DatabaseReference defRestaurantRef = ref.child("def_data");
-        Map<String,String> map = new HashMap<>();
-        map.put("restaurant",gson.toJson(list));
-        map.put("person",gson.toJson(personBeanList));
-        defRestaurantRef.setValue(map);
-    }
 }

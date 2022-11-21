@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.example.mapapp.base.BaseActivity;
 import com.example.mapapp.bean.RestBean;
+import com.example.mapapp.tool.UtilHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,6 +43,8 @@ public class AddRestaurantActivity extends BaseActivity {
     private List<RestBean> list = new ArrayList<>();
     private DatabaseReference ref = FirebaseDatabase.getInstance().getReference("data");
     protected EditText restName, restAddress, restLong, restLat;
+
+    UtilHelper helper = new UtilHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,85 +86,16 @@ public class AddRestaurantActivity extends BaseActivity {
         address = restAddress.getText().toString();
         lng = restLong.getText().toString();
         lat = restLat.getText().toString();
-/*
-        if (!name.isEmpty() && !address.isEmpty() && !lng.isEmpty() && !lat.isEmpty()) {
-            double longitude, latitude;
-            longitude = Double.parseDouble(restLong.getText().toString());
-            latitude = Double.parseDouble(restLat.getText().toString());
-            DatabaseReference defRestaurantRef = ref.child("def_data").child("restaurant");
-            defRestaurantRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    restList = gson.fromJson(dataSnapshot.getValue().toString(), new TypeToken<List<RestBean>>(){}.getType());
-                    Log.d("===","restList:"+restList.size());
-                    Context context = getApplicationContext();
-                    for(RestBean restBean : restList){
-                        if (Math.abs(restBean.getLatitude()-latitude) <= 0.0009 && Math.abs(restBean.getLongtitude()-longitude) <= 0.0009) {
-                            // don't add
-                            Toast.makeText(context, "Location Already Exists.",
-                                    Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        else if (latitude < 34 || latitude > 34.1 || longitude < -118.3 || longitude > -118.2) {
-                            Toast.makeText(context, "Location Out of Village.",
-                                    Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        else if (name.equals(restBean.getName())) {
-                            Toast.makeText(context, "Restaurant Name Already Exists.",
-                                    Toast.LENGTH_SHORT).show();
-                            return;
-                        } else if (address.equals(restBean.getAddress())) {
-                            Toast.makeText(context, "Restaurant Address Already Exists.",
-                                    Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        else {
-                            continue;
-                        }
-                    }
-                    // add to the database
-                    restList.add(new RestBean(name, address, latitude, longitude));
-                    defRestaurantRef.setValue(gson.toJson(restList));
-                    Toast.makeText(context, "New Restaurant Added",
-                            Toast.LENGTH_SHORT).show();
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    System.out.println("===The read failed: " + databaseError.getCode());
-                }
-            });
-        }
-        else {
-            Context context = getApplicationContext();
-            Toast.makeText(context, "Add Failed. Empty Field(s).",
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
-*/
-        if (!name.isEmpty() && !address.isEmpty() && !lng.isEmpty() && !lat.isEmpty()) {
+        if (helper.checkEmptyAddRestaurantField(name, address, lng, lat)) {
             double longitude, latitude;
             longitude = Double.parseDouble(restLong.getText().toString());
             latitude = Double.parseDouble(restLat.getText().toString());
 
             Context context = getApplicationContext();
             for (RestBean restBean : list) {
-                if (Math.abs(restBean.getLatitude() - latitude) <= 0.0009 && Math.abs(restBean.getLongtitude() - longitude) <= 0.0009) {
-                    // don't add
-                    Toast.makeText(context, "Location Already Exists.",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (latitude < 34 || latitude > 34.1 || longitude < -118.3 || longitude > -118.2) {
-                    Toast.makeText(context, "Location Out of Village.",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (name.equals(restBean.getName())) {
-                    Toast.makeText(context, "Restaurant Name Already Exists.",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (address.equals(restBean.getAddress())) {
-                    Toast.makeText(context, "Restaurant Address Already Exists.",
+                if (!helper.restNameAddressValidation(name, address, latitude, longitude, restBean).equals("")){
+                    Toast.makeText(context, helper.restNameAddressValidation(name, address, latitude, longitude, restBean),
                             Toast.LENGTH_SHORT).show();
                     return;
                 } else {

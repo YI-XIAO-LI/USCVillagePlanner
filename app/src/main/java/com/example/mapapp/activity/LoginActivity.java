@@ -53,22 +53,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null)
-
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             FirebaseAuth.getInstance().signOut();
         }
-        /*
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
-        if (account != null) {
-            mGoogleSignInClient.signOut().addOnCompleteListener(this,
-                    new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                        }
-                    });
-        }
-        */
         Context context = getApplicationContext();
         List<String> arrivalList = new ArrayList<>();
         List<String> times = new ArrayList<>();
@@ -118,12 +106,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            /*
-            case R.id.mEtPw1:
-                password = this.mEtPw1.getText().toString();
-            case R.id.mEtEmail1:
-                email = this.mEtEmail1.getText().toString();
-             */
             case R.id.sign_in_button:
                 Intent intent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(intent, 1);
