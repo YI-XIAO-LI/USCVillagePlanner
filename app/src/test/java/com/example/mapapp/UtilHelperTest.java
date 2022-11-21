@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotEquals;
 
 import com.example.mapapp.bean.PersonBean;
 import com.example.mapapp.bean.RestBean;
+import com.example.mapapp.tool.Config;
 import com.example.mapapp.tool.UtilHelper;
 
 import junit.framework.TestCase;
@@ -223,21 +224,31 @@ public class UtilHelperTest extends TestCase {
     public void testConfig_12hour(){
         int hour = 9;
         int minute = 30;
-        assertEquals("09:30", helper.config(hour, minute));
+        assertEquals("09:30", UtilHelper.timeDisplayConfig(hour, minute));
     }
 
     @Test
     public void testConfig_24hour(){
         int hour = 23;
         int minute = 30;
-        assertEquals("23:30", helper.config(hour, minute));
+        assertEquals("23:30", UtilHelper.timeDisplayConfig(hour, minute));
     }
 
     @Test
     public void testConfig_zeroes(){
         int hour = 0;
         int minute = 0;
-        assertEquals("00:00", helper.config(hour, minute));
+        assertEquals("00:00", UtilHelper.timeDisplayConfig(hour, minute));
+    }
+
+    @Test
+    public void testTimeConfigBelow9(){
+        assertEquals(UtilHelper.timeDisplayConfig(5,5), "05:05");
+    }
+
+    @Test
+    public void testTimeConfigAbove9(){
+        assertEquals(UtilHelper.timeDisplayConfig(11,11), "11:11");
     }
 
 
