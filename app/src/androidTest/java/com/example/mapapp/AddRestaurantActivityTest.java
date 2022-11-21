@@ -35,6 +35,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.mapapp.activity.AddReminderActivity;
+import com.example.mapapp.activity.AddRestaurantActivity;
 import com.example.mapapp.activity.LoginActivity;
 import com.example.mapapp.activity.MainActivity;
 import com.example.mapapp.activity.MapsActivity;
@@ -54,10 +55,10 @@ import org.junit.runner.RunWith;
 
 
 @RunWith(AndroidJUnit4.class)
-public class LoginActivityTest {
+public class AddRestaurantActivityTest {
     @Rule
-    public ActivityScenarioRule<LoginActivity> activityScenarioRule =
-            new ActivityScenarioRule<LoginActivity>(LoginActivity.class);
+    public ActivityScenarioRule<AddRestaurantActivity> activityScenarioRule =
+            new ActivityScenarioRule<AddRestaurantActivity>(AddRestaurantActivity.class);
 
     @Before
     public void intentsInit() {
@@ -73,68 +74,76 @@ public class LoginActivityTest {
 
 
     @Test
-    public void loginButtonIsDisplayed() {
-        onView(withId(R.id.mBtnLogin1)).check(matches(isDisplayed()));
-    }
+    public void testAddNewRestaurant(){
+        String restName = "CafeABC";
+        String restAddress = "123 Street, Nottingham IL 10000";
+        String restLong = "-118.28496904742106";
+        String restLat = "34.02550023106205";
 
-    @Test
-    public void registerButtonIsDisplayed() {
-        onView(withId(R.id.mBtnRegister1)).check(matches(isDisplayed()));
-    }
 
-    @Test
-    public void testLogin(){
-        String username = "batman@gmail.com";
-        String password = "123456";
+        onView(withId(R.id.restaurantName)).perform(typeText(restName));
+        onView(withId(R.id.restaurantAddress)).perform(typeText(restAddress));
+        onView(withId(R.id.restaurantLong)).perform(typeText(restLong));
+        onView(withId(R.id.restaurantLat)).perform(typeText(restLat));
 
-        onView(withId(R.id.mEtEmail1)).perform(typeText(username));
-        onView(withId(R.id.mEtPw1)).perform(typeText(password));
-
-        onView(ViewMatchers.withId(R.id.mBtnLogin1)).perform(click());
+        onView(withId(R.id.addRestaurant)).perform(click());
 
         try{
-            intended(IntentMatchers.hasComponent(MapsActivity.class.getName()));
+            intended(IntentMatchers.hasComponent(MainActivity.class.getName()));
             return;
         } catch (AssertionFailedError e) {
-            // intent did not appear, might be something to do with emulator config with firebase
+            // intent did not appear, might be something to do with emulator config, but you will
+            // see a toast message saying restaurant added successfully
             return;
         }
-    }
-
-    @Test
-    public void testRegisterRedirection() {
-        // check if the clicking redirects to the register page
-        onView(ViewMatchers.withId(R.id.mBtnRegister1)).perform(click());
-        Intents.intended(hasComponent(RegisterActivity.class.getName()));
-    }
 
 
-    @Test
-    public void testUnsuccessfulLogin() {
-        String username = "batman@gmail.com";
-        String password = "123456789";
-
-        onView(withId(R.id.mEtEmail1)).perform(typeText(username));
-        onView(withId(R.id.mEtPw1)).perform(typeText(password));
-
-        onView(withId(R.id.mBtnLogin1)).perform(click());
 
         // do not redirect to other page
-        onView(withId(R.id.mBtnRegister1)).check(matches(isDisplayed()));
+
     }
 
     @Test
-    public void testEmptyLogin() {
-        String username = "";
-        String password = "";
+    public void testInvalidAddRestaurant(){
+        String restName = "CafeABC";
+        String restAddress = "123 Street, Nottingham IL 10000";
+        String restLong = "0";
+        String restLat = "0";
 
-        onView(withId(R.id.mEtEmail1)).perform(typeText(username));
-        onView(withId(R.id.mEtPw1)).perform(typeText(password));
 
-        onView(withId(R.id.mBtnLogin1)).perform(click());
+        onView(withId(R.id.restaurantName)).perform(typeText(restName));
+        onView(withId(R.id.restaurantAddress)).perform(typeText(restAddress));
+        onView(withId(R.id.restaurantLong)).perform(typeText(restLong));
+        onView(withId(R.id.restaurantLat)).perform(typeText(restLat));
+
+        onView(withId(R.id.addRestaurant)).perform(click());
 
         // do not redirect to other page
-        onView(withId(R.id.mBtnRegister1)).check(matches(isDisplayed()));
+        onView(withId(R.id.addRestaurant)).check(matches(isDisplayed()));
     }
+
+
+
+
+    @Test
+    public void testAddEmptyRestaurant() {
+        String restName = "";
+        String restAddress = "";
+        String restLong = "";
+        String restLat = "";
+
+
+        onView(withId(R.id.restaurantName)).perform(typeText(restName));
+        onView(withId(R.id.restaurantAddress)).perform(typeText(restAddress));
+        onView(withId(R.id.restaurantLong)).perform(typeText(restLong));
+        onView(withId(R.id.restaurantLat)).perform(typeText(restLat));
+
+        onView(withId(R.id.addRestaurant)).perform(click());
+
+        // do not redirect to other page
+        onView(withId(R.id.addRestaurant)).check(matches(isDisplayed()));
+    }
+
+
 
 }

@@ -147,7 +147,7 @@ public class AddRestaurantActivity extends BaseActivity {
 
             Context context = getApplicationContext();
             for (RestBean restBean : list) {
-                if (Math.abs(restBean.getLatitude() - latitude) <= 0.0009 && Math.abs(restBean.getLongtitude() - longitude) <= 0.0009) {
+                if (Math.abs(restBean.getLatitude() - latitude) <= 0.00009 && Math.abs(restBean.getLongtitude() - longitude) <= 0.00009) {
                     // don't add
                     Toast.makeText(context, "Location Already Exists.",
                             Toast.LENGTH_SHORT).show();

@@ -232,7 +232,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
         for(RestBean restBean : restList) {
             int waitPersonNum = 0;
             for(PersonBean personBean : personList){
-                if(Math.abs(personBean.getLatitude()-restBean.getLatitude())<= 0.0000009
+                if(Math.abs(personBean.getLatitude()-restBean.getLatitude())<= 0.0009
                         && Math.abs(personBean.getLongtitude()-restBean.getLongtitude()) <= 0.0009) {
                     waitPersonNum++;
                 }
