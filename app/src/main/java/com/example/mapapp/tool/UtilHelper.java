@@ -101,6 +101,15 @@ public class UtilHelper {
         }
 
         public void addToReminder(List<String> times, List<String> restNameList, List<String> arrivalList, int arrivalTime, int reminderTime, String restName) {
+            // insert in the sorted order
+            for (int i = 0; i < times.size(); i++) {
+                if( Integer.parseInt(times.get(i)) > reminderTime ) {
+                    arrivalList.add(i, ""+arrivalTime);
+                    times.add(i, ""+reminderTime);
+                    restNameList.add(i, restName);
+                    return;
+                }
+            }
             arrivalList.add(""+arrivalTime);
             times.add(""+reminderTime);
             restNameList.add(restName);
