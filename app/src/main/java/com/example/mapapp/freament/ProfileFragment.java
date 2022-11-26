@@ -1,11 +1,14 @@
 package com.example.mapapp.freament;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,6 +49,7 @@ import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -106,6 +112,7 @@ public class ProfileFragment extends BaseFragment {
             }
             findView(R.id.logout).setOnClickListener(view -> logout());
             findView(R.id.mIvHead).setOnClickListener(view -> changeProfileImage());
+            findView(R.id.camera).setOnClickListener(view -> takePhotoImage());
             return;
         }
 
@@ -121,6 +128,20 @@ public class ProfileFragment extends BaseFragment {
     private void changeProfileImage() {
         Intent openGalleryIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(openGalleryIntent, 1000);
+    }
+
+    private Uri imageUri_;
+
+    private void takePhotoImage() {
+        String fileName = "new-photo-name.jpg";
+        // Create parameters for Intent with filename
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, fileName);
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Image capture by camera");
+        imageUri_ = this.getContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri_);
+        startActivityForResult(intent, 1231);
     }
 
     @Override
@@ -159,6 +180,54 @@ public class ProfileFragment extends BaseFragment {
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+        }
+        else if (requestCode == 1231) {
+            try {
+                ContentResolver cr = this.getContext().getContentResolver();
+                try {
+                    // Creating a Bitmap with the image Captured
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(cr, imageUri_);
+                    // Setting the bitmap as the image of the
+                    mIvHead.setImageBitmap(bitmap);
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setPhotoUri(imageUri_)
+                            .build();
+
+                    currentUser.updateProfile(profileUpdates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("===", "User profile updated.");
+                                    }
+                                }
+                            });
+                    StorageReference fileref = storageRef.child(currentUser.getDisplayName()).child("profile.jpg");
+                    fileref.putFile(imageUri_).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // add a toast
+                            Toast.makeText(getContext(), "Image Uploaded Successfully.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // add a toast
+                            Toast.makeText(getContext(), "Image Uploaded Unsuccessfully. Please Reselect.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (IllegalArgumentException e) {
+                if (e.getMessage() != null)
+                    Log.e("Exception", e.getMessage());
+                else
+                    Log.e("Exception", "Exception");
+                e.printStackTrace();
             }
         }
     }

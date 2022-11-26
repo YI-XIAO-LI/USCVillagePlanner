@@ -38,4 +38,16 @@
         app:layout_constraintTop_toBottomOf="@+id/mTvName"
         tools:layout_editor_absoluteX="93dp" />
 
+    <ImageView
+        android:id="@+id/camera"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="150dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_baseline_camera_alt_24"
+        tools:layout_editor_absoluteX="302dp"
+        tools:layout_editor_absoluteY="126dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
