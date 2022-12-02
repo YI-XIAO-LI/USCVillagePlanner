@@ -60,3 +60,9 @@ In the case where you choose to sign in via Google OAuth and find that the app i
 
 ## (Extra Feature) Add a new Restaurant and Map Reset
 * At the home page, click on the “Add a New Restaurant” Button. Enter the restaurant name, latitude and longitude, to add a new restaurant on to the map. If you want to discard all the added restaurants and revert to the original restaurants’ map in the USC Village, then simply click on the “Revert to Original Map” button at Home page. Click on the “locate” icon on the top right corner, then you will be able to revert back to the original village restaurant map that is initialized in the app by default.
+
+## 2.5 Sprint - New features and improvements
+1. Overall styling UI/UX improvements encompassing all of our fragments.
+2. Reminders being displayed by increasing reminder time, this is reflected in the reminder page when a new reminder is added.
+3. Profile photo can be changed from both camera and local photo album: Users have an option to change profile photo by taking a photo using the emulator camera. Users can access this feature by clicking on the camera icon at the profile page.
+4. Reminder Alert activation will also trigger a beeping sound. Users can activate this feature by clicking on a restaurant on the homepage and adding a reminder, then wait for the reminder to be triggered and the user should be able to hear a sharp beep sound along with the popup alert.
