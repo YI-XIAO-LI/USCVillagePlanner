@@ -136,7 +136,7 @@ public class UtilHelper {
                 return "Location Already Exists.";
             }
             if (latitude < 34 || latitude > 34.1 || longitude < -118.3 || longitude > -118.2) {
-                return "Location Out of Village. Please enter a location with 34 <= latitude < 34.1, and 118.2 <= longitude < 118.3";
+                return "Location Out of Village.";
             }
             if(name.equals(restBean.getName())) {
                 return "Restaurant Name Already Exists.";
