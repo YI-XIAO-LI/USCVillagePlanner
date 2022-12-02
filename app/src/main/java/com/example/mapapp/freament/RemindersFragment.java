@@ -2,6 +2,7 @@ package com.example.mapapp.freament;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,10 +87,13 @@ public class RemindersFragment extends BaseFragment {
     }
 
     private void showTip(String time,String rest,String arrivalTime,int position){
+        final MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), R.raw.beep);
         if(dialog==null||!dialog.isShowing()){
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    mediaPlayer.start();
+
                     dialog = new AlertDialog.Builder(getActivity())
                             .setTitle("Reminder at "+time)
                             .setMessage("Go to "+rest+"\nEstimated Arrival Time:"+arrivalTime)
